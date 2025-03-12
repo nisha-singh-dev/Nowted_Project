@@ -78,7 +78,7 @@ const Header = () => {
   };
 
   return (
-    <div className="p-3 pt-4 flex flex-col gap-7">
+    <div className=" flex flex-col gap-7">
       <div className="flex justify-between">
         <img src={noted} alt="Noted Logo" />
 

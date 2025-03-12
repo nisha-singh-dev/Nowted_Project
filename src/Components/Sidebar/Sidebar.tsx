@@ -6,7 +6,7 @@ import More from './More'
 
 const Sidebar = () => {
   return (
-    <div className='w-2/10 h-screen bg-gray-950 text-white pb-4 flex flex-col justify-between'>
+    <div className='w-2/10 h-screen bg-gray-950 text-white p-4 flex flex-col justify-between'>
         
         <Header />
         <Recent />

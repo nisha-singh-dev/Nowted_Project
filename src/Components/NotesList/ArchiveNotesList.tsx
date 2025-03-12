@@ -26,7 +26,7 @@ const ArchiveNotesList = () => {
     const fetchArcNotes = async () => {
       try {
         const response = await axios.get(
-          `https://nowted-server.remotestate.com/notes?archived=true&favorite=false&deleted=false&page=1&limit=10`
+          `https://nowted-server.remotestate.com/notes?archived=true&deleted=false`
         );
         setArcNotes(response.data.notes);
         

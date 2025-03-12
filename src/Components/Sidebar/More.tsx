@@ -6,7 +6,7 @@ import archive from "../../assets/archive.svg";
 const More = () => {
   return (
     <div className="">
-      <div className="pl-5 text-sm p-2">More</div>
+      <div className=" text-sm pb-2">More</div>
       <div className="more">
         <NavLink
           to="/favourites"

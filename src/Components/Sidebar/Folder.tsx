@@ -1,9 +1,10 @@
 import axios from "axios";
 import folderimg from "../../assets/folderimg.svg";
-import imgfolder from "../../assets/imgfolder.svg"
+import imgfolder from "../../assets/imgfolder.svg";
 import del from "../../assets/delete.svg";
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { RenderContext } from "../../RenderContext";
 
 const api = "https://nowted-server.remotestate.com/folders";
 
@@ -19,8 +20,9 @@ const Folder = () => {
   const [folders, setFolder] = useState<foldertype[]>([]);
   const [editId, setEditId] = useState<string | null>(null);
   const [editValue, setEditValue] = useState<string>("");
+  const {setChange} = useContext(RenderContext);
   const navigate = useNavigate();
-  
+
   //get folder list
   const getFolder = async () => {
     try {
@@ -45,13 +47,14 @@ const Folder = () => {
   //edit folder name
   const editFolder = async (id: string) => {
     try {
-      const response = await axios.patch(`${api}/${id}`,{name: editValue });
+      const response = await axios.patch(`${api}/${id}`, { name: editValue });
       setFolder(
         folders.map((folder) =>
           folder.id === id ? { ...folder, name: response.data.name } : folder
         )
       );
       getFolder();
+      setChange(true);
       setEditId(null);
     } catch (error) {
       console.error("Error updating folder:", error);
@@ -63,7 +66,7 @@ const Folder = () => {
     try {
       await axios.delete(`${api}/${id}`);
       setFolder(folders.filter((folder) => folder.id !== id));
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.error("Error deleting folder:", error);
     }
@@ -75,7 +78,7 @@ const Folder = () => {
 
   return (
     <div>
-      <div className="folder-header flex justify-between pt-5 pb-3 px-4">
+      <div className="folder-header flex justify-between  pb-3 ">
         <p className="text-sm">Folders</p>
         <img
           src={folderimg}
@@ -91,13 +94,15 @@ const Folder = () => {
       >
         <ul>
           {folders.map((note) => (
-            <li
-              key={note.id}
-              className="pl-5 py-1.5 transition duration-300  hover:bg-blue-300 flex items-center gap-3"
+            <NavLink
+              to={`/folder/${note.name}/${note.id}`}
+              className={({ isActive }) =>
+                `flex-1 ${isActive ? "text-gray-400" : "text-white"}`
+              }
             >
-              <NavLink
-                to={`/folder/${note.name}/${note.id}`}
-                className="flex items-center gap-3 flex-1"
+              <li
+                key={note.id}
+                className="pl-5 py-1.5 transition duration-300  hover:bg-blue-300 flex items-center gap-3"
               >
                 <img src={imgfolder} alt="Folder icon" />
                 <div className="flex-1">
@@ -106,7 +111,11 @@ const Folder = () => {
                       type="text"
                       value={editValue}
                       onChange={(e) => setEditValue(e.target.value)}
-                      onKeyDown={(e)=>{if(e.key==='Enter'){editFolder(note.id)}}}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          editFolder(note.id);
+                        }
+                      }}
                       autoFocus
                       className="outline-none"
                     />
@@ -121,14 +130,14 @@ const Folder = () => {
                     </p>
                   )}
                 </div>
-              </NavLink>
-              <img
-                onClick={() => deleteFolder(note.id)}
-                src={del}
-                alt="Delete icon"
-                className="cursor-pointer"
-              />
-            </li>
+                <img
+                  onClick={() => deleteFolder(note.id)}
+                  src={del}
+                  alt="Delete icon"
+                  className="cursor-pointer"
+                />
+              </li>
+            </NavLink>
           ))}
         </ul>
       </div>

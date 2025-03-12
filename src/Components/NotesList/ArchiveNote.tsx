@@ -10,8 +10,17 @@ const ArchiveNote = ({ id, title, date, preview, folderId, folderName }: {
   
 }) => {
   return (
-    <NavLink to={`/archived/${folderName}/${folderId}/notes/${id}`}>
-      <div className="notes-card p-3 bg-gray-700 rounded-lg flex flex-col gap-3 cursor-pointer">
+    <NavLink
+    to={`/archived/${folderName}/${folderId}/notes/${id}`}
+
+    className={({ isActive }) =>
+      `flex-1 block  rounded-md border-2 transition duration-200 ${
+        isActive 
+          ? "border-blue-500  bg-blue-800"  
+          : "border-transparent text-white hover:bg-blue-400" // Inactive & Hover styles
+      }`
+    }
+  >      <div className="notes-card p-3 bg-gray-700 rounded-lg flex flex-col gap-3 cursor-pointer">
       <div>
         <p className="text-lg text-white font-semibold">{title}</p>
       </div>
@@ -25,7 +34,6 @@ const ArchiveNote = ({ id, title, date, preview, folderId, folderName }: {
 };
 
 export default ArchiveNote;
-
 
 
 

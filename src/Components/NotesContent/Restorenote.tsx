@@ -24,7 +24,7 @@ interface NoteType {
 const Restorenote= () => {
   const { notesId } = useParams<{ notesId: string }>();
   const [note, setNote] = useState<NoteType>();
-  const {setChange} = useContext(RenderContext)
+  const {setChange,setMainchange} = useContext(RenderContext)
 
   useEffect(() => {
     const fetchNoteDetails = async () => {
@@ -50,6 +50,7 @@ const Restorenote= () => {
       );
       alert("Note restored successfully!!!")
       setChange(true);
+      setMainchange(true);
     } catch (error) {
       console.error("Error restoring note:", error);
     }

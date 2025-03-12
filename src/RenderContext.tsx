@@ -12,6 +12,7 @@ const defaultval: RenderContextType = {
   setChange: () => {},
   mainchange: false,
   setMainchange: ()=>{},
+ 
  };
 
 export const RenderContext = createContext<RenderContextType>(defaultval);

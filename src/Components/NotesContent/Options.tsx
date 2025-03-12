@@ -16,7 +16,7 @@ const Options = ({
   isArchived: boolean;
 }) => {
   const navigate = useNavigate();
-  const { setChange,setMainchange} = useContext(RenderContext);
+  const { setChange, setMainchange } = useContext(RenderContext);
 
   const { folderName, folderId } = useParams();
 
@@ -26,16 +26,33 @@ const Options = ({
       await axios.delete(
         `https://nowted-server.remotestate.com/notes/${noteId}`
       );
-      alert("Note Deleted successfully!!!")
-      navigate(`/restore/${folderName}/${folderId}/notes/${noteId}`);
+      alert("Note Deleted successfully!!!");
+      // navigate(`/restore/${folderName}/${folderId}/notes/${noteId}`);
       setChange(true);
-      // setMainchange(true);
+      setMainchange(true);
     } catch (error) {
       console.log(error);
     }
   };
 
   //common function to update both fav and archive
+  // const updateNoteProperty = async (property: string, value: boolean) => {
+  //   try {
+  //     await axios.patch(
+  //       `https://nowted-server.remotestate.com/notes/${noteId}`,
+  //       {
+  //         [property]: value,
+  //       }
+  //     );
+  //     alert(`Note ${property === "isFavorite" ? (value ? "added to favorites" : "removed from favorites") :
+  //       property === "isArchived" ? (value ? "archived" : "unarchived") : "updated"} successfully!`);
+  //     setMainchange(true); //for refresh
+  //     setChange(true);
+  //   } catch (error) {
+  //     console.error(`Error updating ${property}:`, error);
+  //   }
+  // };
+
   const updateNoteProperty = async (property: string, value: boolean) => {
     try {
       await axios.patch(
@@ -44,10 +61,31 @@ const Options = ({
           [property]: value,
         }
       );
-      alert(`Note ${property === "isFavorite" ? (value ? "added to favorites" : "removed from favorites") : 
-        property === "isArchived" ? (value ? "archived" : "unarchived") : "updated"} successfully!`);
-      setMainchange(true); //for refresh
+
+      alert(
+        `Note ${
+          property === "isFavorite"
+            ? value
+              ? "added to favorites"
+              : "removed from favorites"
+            : property === "isArchived"
+            ? value
+              ? "archived"
+              : "unarchived"
+            : "updated"
+        } successfully!`
+      );
+
+      setMainchange(true);
       setChange(true);
+
+      if (property === "isArchived") {
+        if (value) {
+          navigate(`/folder/${folderName}/${folderId}`);
+        } else {
+          navigate(`/folder/${folderName}/${folderId}/notes/${noteId}`);
+        }
+      }
     } catch (error) {
       console.error(`Error updating ${property}:`, error);
     }
@@ -89,5 +127,3 @@ const Options = ({
 };
 
 export default Options;
-
-

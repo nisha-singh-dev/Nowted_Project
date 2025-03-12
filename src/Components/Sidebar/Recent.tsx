@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  {  useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import recentimg from "../../assets/recent.svg";
@@ -27,12 +27,13 @@ const Recent = () => {
   };
 
   useEffect(() => {
+    
     getRecentNotes();
-  }, []);
+  },[]);
 
   return (
     <div>
-      <div className='text-sm pt-5 pl-5 pb-2'>Recents</div>
+      <div className='text-sm '>Recents</div>
       <div className='recent-list'>
         <ul>
           {recentNotes.map((note) => (
