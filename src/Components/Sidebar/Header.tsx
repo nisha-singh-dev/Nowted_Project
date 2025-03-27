@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import noted from "../../assets/Group 1.svg";
-import closeIcon from "../../assets/closeIcon.svg";
 import search from "../../assets/Frame.svg";
 import { RenderContext } from "../../RenderContext";
+import close from "../../assets/close.svg"
 
 interface NoteType {
   id: string;
@@ -83,7 +83,7 @@ const Header = () => {
         <img src={noted} alt="Noted Logo" />
 
         <img
-          src={isSearchVisible ? closeIcon : search}
+          src={isSearchVisible ? close : search}
           alt={isSearchVisible ? "Close Search" : "Search Icon"}
           className="cursor-pointer"
           onClick={handleSearchIconClick}
