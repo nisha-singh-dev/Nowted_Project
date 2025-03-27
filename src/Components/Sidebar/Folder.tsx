@@ -77,7 +77,7 @@ const Folder = () => {
   }, []);
 
   return (
-    <div>
+    <div className="py-4">
       <div className="folder-header flex justify-between  pb-3 ">
         <p className="text-sm">Folders</p>
         <img
