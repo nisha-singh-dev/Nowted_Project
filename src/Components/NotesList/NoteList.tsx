@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -28,26 +29,22 @@ const NoteList = () => {
   const [notes, setNotes] = useState<NoteType[]>([]);
   const { change, setChange } = useContext(RenderContext);
   const [editname, setEditName] = useState(folderName);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
-  const limit = 10;
+
 
   useEffect(() => {
     const fetchNotes = async () => {
       try {
         const response = await axios.get(`
-        https://nowted-server.remotestate.com/notes?archived=false&deleted=false&folderId=${folderId}&page=${page}&limit=${limit}`);
+        https://nowted-server.remotestate.com/notes?archived=false&deleted=false&folderId=${folderId}&page=1&limit=10`);
 
-        if (response.data.notes.length < limit) {
-          setHasMore(false);
-        }
+    
         if (response.data.notes.length > 0) {
           const folderDeleted = response.data.notes[0].folder.deletedAt;
           setEditName(response.data.notes[0].folder.name);
           if (folderDeleted) {
             setNotes([]);
           } else {
-            setNotes((prevNotes) => [...prevNotes, ...response.data.notes]);
+            setNotes(response.data.notes);
           }
         } else {
           setNotes([]);
@@ -63,7 +60,7 @@ const NoteList = () => {
       }
       fetchNotes();
     }
-  }, [folderId, change, setChange, page]);
+  }, [folderId, change, setChange]);
 
   return (
     <div className="w-2/10 h-screen bg-gray-900 p-3 flex flex-col">
@@ -100,14 +97,7 @@ const NoteList = () => {
         <p className="text-center text-gray-300 mt-5">No notes found</p>
       )}
 
-      {hasMore && (
-        <button
-          onClick={() => setPage((prevPage) => prevPage + 1)}
-          className="mt-3 p-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-        >
-          Load More Notes
-        </button>
-      )}
+      
     </div>
   );
 };
