@@ -29,9 +29,9 @@ const FavNotesList = () => {
         const response = await axios.get(
           `https://nowted-server.remotestate.com/notes?archived=false&favorite=true&deleted=false&page=1&limit=10`
         );
-        console.log("fav",response.data);
+        // console.log("fav",response.data);
         
-        console.log("fav data",response.data.notes[0].folder.name);
+        // console.log("fav data",response.data.notes[0].folder.name);
         
         setFavNotes(response.data.notes);
       } catch (error) {

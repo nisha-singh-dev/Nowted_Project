@@ -77,71 +77,72 @@ const Folder = () => {
   }, []);
 
   return (
-    <div>
-      <div className="folder-header flex justify-between  pb-3 ">
-        <p className="text-sm">Folders</p>
-        <img
-          src={folderimg}
-          alt=""
-          onClick={addFolder}
-          className="cursor-pointer"
-        />
-      </div>
-      <div
-        className="folders max-h-45 overflow-y-auto [&::-webkit-scrollbar]:w-1
-                    [&::-webkit-scrollbar-track]:bg-gray-300
-                    [&::-webkit-scrollbar-thumb]:bg-gray-100"
-      >
-        <ul>
-          {folders.map((note) => (
-            <NavLink
-              to={`/folder/${note.name}/${note.id}`}
-              className={({ isActive }) =>
-                `flex-1 ${isActive ? "text-gray-400" : "text-white"}`
-              }
-            >
-              <li
-                key={note.id}
-                className="pl-5 py-1.5 transition duration-300  hover:bg-blue-300 flex items-center gap-3"
-              >
-                <img src={imgfolder} alt="Folder icon" />
-                <div className="flex-1">
-                  {editId === note.id ? (
-                    <input
-                      type="text"
-                      value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          editFolder(note.id);
-                        }
-                      }}
-                      autoFocus
-                      className="outline-none"
-                    />
-                  ) : (
-                    <p
-                      onDoubleClick={() => {
-                        setEditId(note.id);
-                        setEditValue(note.name);
-                      }}
-                    >
-                      {note.name}
-                    </p>
-                  )}
-                </div>
-                <img
-                  onClick={() => deleteFolder(note.id)}
-                  src={del}
-                  alt="Delete icon"
-                  className="cursor-pointer"
-                />
-              </li>
-            </NavLink>
-          ))}
-        </ul>
-      </div>
+    <div className="py-4">
+    <div className="folder-header flex justify-between pb-3">
+      <p className="text-sm">Folders</p>
+      <img
+        src={folderimg}
+        alt="Add folder"
+        onClick={addFolder}
+        className="cursor-pointer"
+      />
     </div>
+    <div
+      className="folders max-h-45 overflow-y-auto [&::-webkit-scrollbar]:w-1
+                  [&::-webkit-scrollbar-track]:bg-gray-300
+                  [&::-webkit-scrollbar-thumb]:bg-gray-100"
+    >
+      <ul>
+        {folders.map((note) => (
+          <li
+            key={note.id}
+            className="pl-5 py-1.5 transition duration-300 hover:bg-blue-300 flex items-center gap-3"
+          >
+            <img src={imgfolder} alt="Folder icon" />
+            <div className="flex-1">
+              {editId === note.id ? (
+                <input
+                  type="text"
+                  value={editValue}
+                  onChange={(e) => setEditValue(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      editFolder(note.id);
+                    }
+                  }}
+                  autoFocus
+                  className="outline-none w-full bg-transparent"
+                />
+              ) : (
+                <NavLink
+                  to={`/folder/${note.name}/${note.id}`}
+                  className={({ isActive }) =>
+                    `block ${isActive ? "text-gray-400" : "text-white"}`
+                  }
+                >
+                  <p
+                    onDoubleClick={() => {
+                      setEditId(note.id);
+                      setEditValue(note.name);
+                    }}
+                  >
+                    {note.name}
+                  </p>
+                </NavLink>
+              )}
+            </div>
+            <img
+              onClick={() => deleteFolder(note.id)}
+              src={del}
+              alt="Delete icon"
+              className="cursor-pointer"
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  
   );
 };
 

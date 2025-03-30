@@ -33,7 +33,7 @@ const Recent = () => {
 
   return (
     <div>
-      <div className='text-sm '>Recents</div>
+      <div className='text-sm py-4 '>Recents</div>
       <div className='recent-list'>
         <ul>
           {recentNotes.map((note) => (

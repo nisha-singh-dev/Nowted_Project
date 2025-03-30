@@ -117,6 +117,7 @@ const Header = () => {
                       <NavLink
                         to={`/folder/${note.folder.name}/${note.folderId}/notes/${note.id}`}
                         className="text-black hover:text-white"
+                        onClick={() => setIsSearchVisible(false)}
                       >
                         {note.title}
                       </NavLink>

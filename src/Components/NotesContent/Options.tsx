@@ -35,23 +35,7 @@ const Options = ({
     }
   };
 
-  //common function to update both fav and archive
-  // const updateNoteProperty = async (property: string, value: boolean) => {
-  //   try {
-  //     await axios.patch(
-  //       `https://nowted-server.remotestate.com/notes/${noteId}`,
-  //       {
-  //         [property]: value,
-  //       }
-  //     );
-  //     alert(`Note ${property === "isFavorite" ? (value ? "added to favorites" : "removed from favorites") :
-  //       property === "isArchived" ? (value ? "archived" : "unarchived") : "updated"} successfully!`);
-  //     setMainchange(true); //for refresh
-  //     setChange(true);
-  //   } catch (error) {
-  //     console.error(`Error updating ${property}:`, error);
-  //   }
-  // };
+
 
   const updateNoteProperty = async (property: string, value: boolean) => {
     try {
